@@ -1,5 +1,7 @@
 # Yellow Banana
 
+This repository contains ML model that predicts the likelihood of customers defaulting on telco payment based on their telco data. 
+
 ## Installation
 
 ### Requirements
