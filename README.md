@@ -3,11 +3,8 @@
 This repository contains ML model that predicts the likelihood of customers defaulting on telco payment based on their telco data. 
 
 ## Model Performance
-Model used: XGBoost
-Model Parameters (tuned using GridSearchCV):
-```
-```
-Model Performance
+Model used: [TabNet](https://github.com/dreamquark-ai/tabnet) <br>
+Model Performance:
 ```
 ROC-AUC: 0.7388092
 F1-score: 0.60817717
@@ -100,25 +97,25 @@ TotalCharges | required | float |
 ```
 [
   {
-    "gender": "Female",
+    "gender": "Male",
     "SeniorCitizen": 0.0,
-    "Partner": "Yes",
+    "Partner": "No",
     "Dependents": "No",
-    "tenure": 1.0,
-    "PhoneService": "No",
-    "MultipleLines": "No phone service",
+    "tenure": 34.0,
+    "PhoneService": "Yes",
+    "MultipleLines": "No",
     "InternetService": "DSL",
-    "OnlineSecurity": "No",
-    "OnlineBackup": "Yes",
-    "DeviceProtection": "No",
+    "OnlineSecurity": "Yes",
+    "OnlineBackup": "No",
+    "DeviceProtection": "Yes",
     "TechSupport": "No",
     "StreamingTV": "No",
     "StreamingMovies": "No",
-    "Contract": "Month-to-month",
-    "PaperlessBilling": "Yes",
-    "PaymentMethod": "Electronic check",
-    "MonthlyCharges": 29.85,
-    "TotalCharges": "29.85"
+    "Contract": "One year",
+    "PaperlessBilling": "No",
+    "PaymentMethod": "Mailed check",
+    "MonthlyCharges": 56.95,
+    "TotalCharges": "1889.5"
   }
 ]
 ```
@@ -127,7 +124,7 @@ TotalCharges | required | float |
 **Sample response**
 ```
 {
-    "prediction": "[1]"
+    "prediction": "[0]"
 }
 ```
 1: Customer is likely to default on telco payment<br>
