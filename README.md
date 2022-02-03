@@ -2,6 +2,18 @@
 
 This repository contains ML model that predicts the likelihood of customers defaulting on telco payment based on their telco data. 
 
+## Model Performance
+Model used: XGBoost
+Model Parameters (tuned using GridSearchCV):
+```
+```
+Model Performance
+```
+ROC-AUC: 0.7388092
+F1-score: 0.60817717
+```
+
+
 ## Installation
 
 ### Requirements
@@ -118,5 +130,5 @@ TotalCharges | required | float |
     "prediction": "[1]"
 }
 ```
-1: Customer is likely to default <br>
-0: Customer is unlikely to default
+1: Customer is likely to default on telco payment<br>
+0: Customer is unlikely to default on telco payment
