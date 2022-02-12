@@ -22,8 +22,12 @@ df = pd.read_csv('finantier_data_technical_test_dataset.csv', index_col=False)
 
 
 # Data Pre-processing
-# Drop rows with missing values
+# Drop rows with missing values and empty strings
 df = df.dropna()
+df['TotalCharges'] = df['TotalCharges'].replace(' ', 0)
+
+# Convert TotalCharges to numerical column
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'])
 
 # Separate input variables and labels
 X = df.drop(columns=['Default', 'customerID'], axis=1)
@@ -42,7 +46,7 @@ x_train_ori, x_test_ori, y_train, y_test = train_test_split(X, y, test_size=0.3)
 # Encode labels
 le = preprocessing.LabelEncoder()
 y_train['Default'] = le.fit_transform(y_train['Default'])
-y_test['Default'] = le.fit_transform(y_test['Default'])
+y_test['Default'] = le.transform(y_test['Default'])
 
 categorical_cols = ['gender', 'SeniorCitizen', 'Partner', 'Dependents',
        'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity',
@@ -55,14 +59,14 @@ arr_x_train = ohe.fit_transform(x_train_ori[categorical_cols]).toarray()
 x_train_labels = ohe.get_feature_names_out()
 x_train_labels = np.array(x_train_labels).ravel()
 x_train = pd.DataFrame(arr_x_train, columns=x_train_labels)
-add_x_train = x_train_ori[['tenure', 'MonthlyCharges']].reset_index(drop=True)
+add_x_train = x_train_ori[['tenure', 'MonthlyCharges', 'TotalCharges']].reset_index(drop=True)
 x_train = pd.concat([x_train, add_x_train], axis=1)
 
-arr_x_test = ohe.fit_transform(x_test_ori[categorical_cols]).toarray()
+arr_x_test = ohe.transform(x_test_ori[categorical_cols]).toarray()
 x_test_labels = ohe.get_feature_names_out()
 x_test_labels = np.array(x_test_labels).ravel()
 x_test = pd.DataFrame(arr_x_test, columns=x_test_labels)
-add_x_test = x_test_ori[['tenure', 'MonthlyCharges']].reset_index(drop=True)
+add_x_test = x_test_ori[['tenure', 'MonthlyCharges', 'TotalCharges']].reset_index(drop=True)
 x_test = pd.concat([x_test, add_x_test], axis=1)
 
 # Oversampling data using SMOTE since data is imbalanced, 73.5% default cases
@@ -90,12 +94,9 @@ fs_list = pd.DataFrame(rows, columns=["column name", "chi-squared stats"])
 # plt.show()
 
 # Selecting only important features
-drop_columns=['PhoneService_Yes', 'PhoneService_No', 
-              'gender_Male', 'gender_Female',
-              'MultipleLines_Yes', 'MultipleLines_No',
-              'Dependents_Yes', 'Dependents_No',
-              'Partner_Yes', 'Partner_No',
-              'SeniorCitizen_0.0', 'SeniorCitizen_1.0']
+drop_columns=['gender_Male', 'gender_Female', 
+             'PhoneService_Yes', 'MultipleLines_No phone service',
+             'PhoneService_No', 'MultipleLines_No', 'MultipleLines_Yes']
 x_train = x_train.drop(columns=drop_columns, axis=1)
 x_test = x_test.drop(columns=drop_columns, axis=1)
 model_columns = list(x_train.columns)
@@ -126,6 +127,7 @@ def evaluate_results(y_test, y_pred, model):
     auc = roc_auc_score(y_test, y_pred)
     
     print(f"Performance of ", model, ":")
+    print("Confusion Matrix: \n", cm)
     print("Accuracy: ", round(acc, 8))
     print("Precision: ", round(prec, 8))
     print("Recall: ", round(recall, 8))
