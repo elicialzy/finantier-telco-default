@@ -69,8 +69,9 @@ _Copy hostname to use API (e.g. http://0.0.0.0:3000/)_
 ------
 <br>
 ## API Usage 
-#### `POST /predict`
+`POST /predict`
 `e.g. http://0.0.0.0:3000/predict`
+
 **API Parameters**
 Name  | Required | Type | Supported Values
 ------------- | ------------- | ------------- | ------------- |
