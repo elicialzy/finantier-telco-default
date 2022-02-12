@@ -6,8 +6,8 @@ This repository contains ML model that predicts the likelihood of customers defa
 Model used: [TabNet](https://github.com/dreamquark-ai/tabnet) <br>
 Model Performance:
 ```
-ROC-AUC: 0.7388092
-F1-score: 0.60817717
+ROC-AUC: 0.74782303
+F1-score: 0.62001505
 ```
 
 
