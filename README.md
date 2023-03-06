@@ -1,4 +1,4 @@
-# Yellow Banana
+# Finantier Telco Default Prediction
 
 This repository contains ML model that predicts the likelihood of customers defaulting on telco payment based on their telco data. 
 
@@ -39,12 +39,12 @@ $ source venv/bin/activate
 ### Method 1: Running model on Docker
 Build the docker image
 ```
-$ docker build -t yellow-banana .
+$ docker build -t finantier-telco-default .
 ```
 
 Run docker container
 ```
-$ docker run -d -p 3000:3000 yellow-banana
+$ docker run -d -p 3000:3000 finantier-telco-default
 ```
 
 Check if container is running
